@@ -25,10 +25,29 @@ public interface QueueADT<E> {
      */
     E dequeue();
 
+    /**
+     * Returns the front element of the queue without removing it.
+     *  
+     * @return the front element of the queue
+     * @throws java.util.NoSuchElementException if the queue is empty
+     * @post the queue remains unchanged
+     */
     E peek();
 
+    /**
+     * Check if the queue is empty or not
+     * 
+     * @return true if the queue has no elements; otherwise, return false
+     * @post the queue remains unchanged
+     */
     boolean isEmpty();
 
+    /**
+     * Returns the number of elements currently in the queue
+     * 
+     * @return the numbers of elements in the queue
+     * @post the queue remains unchanged
+     */
     int size();
 
     /**
