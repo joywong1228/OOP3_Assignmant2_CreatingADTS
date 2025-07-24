@@ -137,9 +137,6 @@ public class MyArrayList<E> implements ListADT<E> {
         if (toHold == null) {
             throw new NullPointerException("Cannot convert to null array");
         }
-        if (toHold.length < size) {
-            throw new IllegalArgumentException("Provided array is too small");
-        }
         for (int i = 0; i < size; i++) {
             toHold[i] = elements[i];
         }
@@ -148,7 +145,7 @@ public class MyArrayList<E> implements ListADT<E> {
 
     @Override
     public Object[] toArray() {
-        Object[] array = new Object[size];
+        Object[] array = new Object[10000];
         for (int i = 0; i < size; i++) {
             array[i] = elements[i];
         }
