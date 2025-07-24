@@ -1,15 +1,18 @@
 package implementations;
 
 import utilities.ListADT;
+
+import java.util.NoSuchElementException;
+
 import utilities.Iterator;
 
-public class MyArrayList<E> implements ListADT<E>, Iterator<E> {
+public class MyArrayList<E> implements ListADT<E> {
 
     private E[] elements;
     private int size;
 
     public MyArrayList() {
-        elements = (E[]) new Object[10000];
+        elements = (E[]) new Object[10000]; // Initial capacity of 10
         size = 0;
     }
     
@@ -170,18 +173,6 @@ public class MyArrayList<E> implements ListADT<E>, Iterator<E> {
                 return elements[currentIndex++];
             }
         };
-    }
-
-    @Override
-    public boolean hasNext() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hasNext'");
-    }
-
-    @Override
-    public E next() throws NoSuchElementException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'next'");
     }
     
 }
