@@ -3,85 +3,99 @@ package implementations;
 import utilities.QueueADT;
 import utilities.Iterator;
 import exceptions.EmptyQueueException;
+import utilities.ListADT;
 
 public class MyQueue<E> implements QueueADT<E> {
 
+    private ListADT<E> list;
+
+    public MyQueue() {
+        list = new MyDLL<>(); // use your own implementation
+    }
+
     @Override
     public void enqueue(E toAdd) throws NullPointerException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enqueue'");
+        if (toAdd == null) {
+            throw new NullPointerException("Cannot enqueue null");
+        }
+        list.add(toAdd); // add to the rear
     }
 
     @Override
     public E dequeue() throws EmptyQueueException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dequeue'");
+        if (isEmpty()) {
+            throw new EmptyQueueException("Queue is empty");
+        }
+        return list.remove(0); // remove from front
     }
 
     @Override
     public E peek() throws EmptyQueueException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'peek'");
+        if (isEmpty()) {
+            throw new EmptyQueueException("Queue is empty");
+        }
+        return list.get(0); // get front without removing
     }
 
     @Override
     public void dequeueAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dequeueAll'");
+        list.clear();
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+        return list.isEmpty();
     }
 
     @Override
     public boolean contains(E toFind) throws NullPointerException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contains'");
+        return list.contains(toFind);
     }
 
     @Override
-    public int search(E toFind) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'search'");
+    public int search(E toFind) throws NullPointerException {
+        if (toFind == null) throw new NullPointerException("Cannot search null element");
+        for (int i = 0; i < list.size(); i++) {
+            if (toFind.equals(list.get(i))) return i;
+        }
+        return -1;
     }
 
     @Override
     public Iterator<E> iterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+        return list.iterator();
     }
 
     @Override
     public boolean equals(QueueADT<E> that) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'equals'");
+        if (that == null || that.size() != this.size()) return false;
+        Iterator<E> thisIt = this.iterator();
+        Iterator<E> thatIt = that.iterator();
+        while (thisIt.hasNext()) {
+            if (!thisIt.next().equals(thatIt.next())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public Object[] toArray() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toArray'");
+        return list.toArray();
     }
 
     @Override
     public E[] toArray(E[] holder) throws NullPointerException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toArray'");
+        return list.toArray(holder);
     }
 
     @Override
     public boolean isFull() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isFull'");
+        return false; // linked list-backed queue is never full
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return list.size();
     }
-    // Implementation details go here
 }
