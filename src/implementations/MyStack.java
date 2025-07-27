@@ -49,12 +49,32 @@ public class MyStack<E> implements StackADT<E> {
 
     @Override
     public Object[] toArray() {
-        return list.toArray();
+        Object[] result = new Object[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(list.size() - 1 - i); // reverse order
+        }
+        return result;
     }
 
     @Override
     public E[] toArray(E[] holder) throws NullPointerException {
-        return list.toArray(holder);
+        if (holder == null)
+            throw new NullPointerException("Null holder");
+
+        int size = list.size();
+        if (holder.length < size) {
+            holder = (E[]) java.util.Arrays.copyOf(holder, size, holder.getClass());
+        }
+
+        for (int i = 0; i < size; i++) {
+            holder[i] = list.get(size - 1 - i); // reverse order
+        }
+
+        if (holder.length > size) {
+            holder[size] = null;
+        }
+
+        return holder;
     }
 
     @Override
@@ -78,12 +98,28 @@ public class MyStack<E> implements StackADT<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return list.iterator();
+        return new Iterator<E>() {
+            private int index = list.size() - 1;
+
+            @Override
+            public boolean hasNext() {
+                return index >= 0;
+            }
+
+            @Override
+            public E next() {
+                if (!hasNext()) {
+                    throw new java.util.NoSuchElementException("No more elements");
+                }
+                return list.get(index--); // reverse direction
+            }
+        };
     }
 
     @Override
     public boolean equals(StackADT<E> that) {
-        if (that == null || this.size() != that.size()) return false;
+        if (that == null || this.size() != that.size())
+            return false;
 
         Iterator<E> thisIt = this.iterator();
         Iterator<E> thatIt = that.iterator();

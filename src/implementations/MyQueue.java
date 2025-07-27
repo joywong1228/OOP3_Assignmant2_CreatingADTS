@@ -1,9 +1,9 @@
 package implementations;
 
-import utilities.QueueADT;
-import utilities.Iterator;
 import exceptions.EmptyQueueException;
+import utilities.Iterator;
 import utilities.ListADT;
+import utilities.QueueADT;
 
 public class MyQueue<E> implements QueueADT<E> {
 
@@ -54,11 +54,16 @@ public class MyQueue<E> implements QueueADT<E> {
 
     @Override
     public int search(E toFind) throws NullPointerException {
-        if (toFind == null) throw new NullPointerException("Cannot search null element");
+        if (toFind == null)
+            throw new NullPointerException();
+
         for (int i = 0; i < list.size(); i++) {
-            if (toFind.equals(list.get(i))) return i;
+            if (toFind.equals(list.get(i))) {
+                return i + 1; // 1-based index
+            }
         }
-        return -1;
+
+        return -1; // Not found
     }
 
     @Override
@@ -68,7 +73,8 @@ public class MyQueue<E> implements QueueADT<E> {
 
     @Override
     public boolean equals(QueueADT<E> that) {
-        if (that == null || that.size() != this.size()) return false;
+        if (that == null || that.size() != this.size())
+            return false;
         Iterator<E> thisIt = this.iterator();
         Iterator<E> thatIt = that.iterator();
         while (thisIt.hasNext()) {
