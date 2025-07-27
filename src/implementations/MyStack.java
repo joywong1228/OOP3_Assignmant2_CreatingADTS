@@ -1,89 +1,108 @@
 package implementations;
 
 import utilities.StackADT;
-
-import java.util.EmptyStackException;
-
 import utilities.Iterator;
+import java.util.EmptyStackException;
+import utilities.ListADT;
 
 public class MyStack<E> implements StackADT<E> {
 
+    private ListADT<E> list;
+
+    public MyStack() {
+        list = new MyArrayList<>();
+    }
+
     @Override
     public void push(E toAdd) throws NullPointerException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'push'");
+        if (toAdd == null) {
+            throw new NullPointerException("Cannot push null element");
+        }
+        list.add(toAdd); // Add to top (end of list)
     }
 
     @Override
     public E pop() throws EmptyStackException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pop'");
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        return list.remove(list.size() - 1); // Remove from top
     }
 
     @Override
     public E peek() throws EmptyStackException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'peek'");
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        return list.get(list.size() - 1); // Peek at top
     }
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
+        list.clear();
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+        return list.isEmpty();
     }
 
     @Override
     public Object[] toArray() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toArray'");
+        return list.toArray();
     }
 
     @Override
     public E[] toArray(E[] holder) throws NullPointerException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toArray'");
+        return list.toArray(holder);
     }
 
     @Override
     public boolean contains(E toFind) throws NullPointerException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contains'");
+        return list.contains(toFind);
     }
 
     @Override
-    public int search(E toFind) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'search'");
+    public int search(E toFind) throws NullPointerException {
+        if (toFind == null) {
+            throw new NullPointerException("Cannot search null");
+        }
+        // Search from top of stack (end of list)
+        for (int i = list.size() - 1, pos = 1; i >= 0; i--, pos++) {
+            if (toFind.equals(list.get(i))) {
+                return pos; // return 1-based position from top
+            }
+        }
+        return -1;
     }
 
     @Override
     public Iterator<E> iterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+        return list.iterator();
     }
 
     @Override
     public boolean equals(StackADT<E> that) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'equals'");
+        if (that == null || this.size() != that.size()) return false;
+
+        Iterator<E> thisIt = this.iterator();
+        Iterator<E> thatIt = that.iterator();
+
+        while (thisIt.hasNext()) {
+            if (!thisIt.next().equals(thatIt.next())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return list.size();
     }
 
     @Override
     public boolean stackOverflow() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'stackOverflow'");
+        return false; // always false for dynamic stack
     }
-    
 }
